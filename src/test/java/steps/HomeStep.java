@@ -4,28 +4,32 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Então;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.HomePage;
+import runner.RunCucumberTests;
 
-public class HomeStep {
-    WebDriver driver = new ChromeDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 15);
+public class HomeStep extends RunCucumberTests {
+    private String url = "https://adopet-tau.vercel.app/";
+    private By elMsgWelcome = By.cssSelector("section > h3");
+    private By elSecundaryText = By.cssSelector("section > p");
+    private String expectedText = "Adotar pode mudar uma vida. Que tal buscar seu novo melhor amigo hoje? Vem com a gente!";
+
+    int time = 15;
+    HomePage homePage = new HomePage(driver, time);
 
     @Dado("que o usuário acessa a página inicial do site")
     public void que_o_usuário_acessa_a_página_inicial_do_site() {
-        driver.get("https://adopet-tau.vercel.app/");
+        homePage.visitHomePage(url);
     }
+
     @Então("a página deverá conter o texto {string}")
-    public void a_página_deverá_conter_o_texto(String string) {
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                By.cssSelector("section > h3"), "Boas-vindas!"));
+    public void a_página_deverá_conter_o_texto(String expectedMessage) {
+        homePage.waitForVisibleText(elMsgWelcome, expectedMessage);
+        homePage.validateText(elMsgWelcome, expectedMessage);
     }
+
     @E("o texto {string}")
-    public void o_texto(String string) {
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                By.cssSelector("section > p"),
-                "Adotar pode mudar uma vida. Que tal buscar seu novo melhor amigo hoje? Vem com a gente!"));
+    public void o_texto(String expectedText) {
+        homePage.waitForVisibleText(elSecundaryText, expectedText);
+        homePage.validateText(elSecundaryText, expectedText);
     }
 }
