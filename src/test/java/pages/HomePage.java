@@ -1,9 +1,17 @@
 package pages;
 
 import org.openqa.selenium.By;
-import utils.Utils;
+import org.openqa.selenium.WebDriver;
+import support.Utils;
+
 
 public class HomePage extends Utils {
+
+    WebDriver driver;
+
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+    }
 
     public void visitHomePage(String url) {
         driver.get(url);

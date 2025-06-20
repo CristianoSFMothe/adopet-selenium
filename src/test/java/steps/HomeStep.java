@@ -8,12 +8,14 @@ import pages.HomePage;
 import runner.RunCucumberTests;
 
 public class HomeStep extends RunCucumberTests {
+
+    HomePage homePage = new HomePage(driver);
+
     private String url = "https://adopet-tau.vercel.app/";
     private By elMsgWelcome = By.cssSelector("section > h3");
     private By elSecundaryText = By.cssSelector("section > p");
 
     int time = 15;
-    HomePage homePage = new HomePage();
 
     @Dado("que o usuário acessa a página inicial do site")
     public void que_o_usuário_acessa_a_página_inicial_do_site() {
