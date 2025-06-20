@@ -22,6 +22,7 @@ public class RunCucumberTests {
     @BeforeClass
     public static void start() {
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @AfterClass
